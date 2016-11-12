@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a(
             Yii::t('cms', 'Create {modelClass}', ['modelClass' => Yii::t('cms', 'Attribute')]),
-            ['create'],
+            ['create','model_id' => Yii::$app->request->get('model_id')],
             ['class' => 'btn btn-success']
         ) ?>
     </p>

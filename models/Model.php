@@ -46,6 +46,8 @@ use yii\behaviors\TimestampBehavior;
  */
 class Model extends \yii\db\ActiveRecord
 {
+    const EXTEND_DOCUMENT_PREFIX = 'document_';
+
     const MODEL_INDEPENDENCE = 0;
     const MODEL_DOCUMENT = 1;
     public static $modelLabels = [

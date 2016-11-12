@@ -199,14 +199,14 @@ class Attribute extends \yii\db\ActiveRecord
     {
         return [
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
-            [['is_show', 'model_id', 'is_must', 'status', 'update_time', 'create_time', 'validate_time', 'auto_time'], 'integer'],
-            [['validate_rule', 'validate_time', 'error_info', 'validate_type', 'auto_rule', 'auto_time', 'auto_type'], 'required'],
+            [['is_show', 'model_id', 'is_must', 'status', 'validate_time', 'auto_time'], 'integer'],
+            [['validate_rule', 'error_info', 'auto_rule'], 'default', 'value' => ''],
+            [['validate_time', 'validate_type', 'auto_time', 'auto_type'], 'required'],
             [['name'], 'string', 'max' => 30],
             [['title', 'field', 'value', 'remark', 'error_info', 'auto_rule'], 'string', 'max' => 100],
             [['type'], 'string', 'max' => 20],
             [['extra', 'validate_rule'], 'string', 'max' => 255],
             [['validate_type', 'auto_type'], 'string', 'max' => 25],
-
             [['name'], 'filter', 'filter' => 'strtolower'],
         ];
     }
@@ -244,7 +244,6 @@ class Attribute extends \yii\db\ActiveRecord
     public function attributeHints()
     {
         return [
-
             'name' => Yii::t('cms', '请输入字段名 英文字母开头，长度不超过30'),
             'title' => Yii::t('cms', '请输入字段标题，用于表单显示'),
             'type' => Yii::t('cms', '用于表单中的展示方式'),

@@ -9,8 +9,11 @@
 namespace app\behaviors;
 
 
+use app\models\Attribute;
+use app\models\Model;
 use yii\base\Behavior;
 use yii\db\ActiveRecord;
+use Yii;
 
 /**
  * Class FieldBehavior
@@ -31,18 +34,30 @@ class FieldBehavior extends Behavior
     public function events()
     {
         return [
-            ActiveRecord::EVENT_AFTER_INSERT => 'addField',
+            ActiveRecord::EVENT_BEFORE_INSERT => 'addField',
             ActiveRecord::EVENT_AFTER_UPDATE => 'updateField',
             ActiveRecord::EVENT_AFTER_DELETE => 'deleteField',
         ];
     }
 
+    protected function getTableName()
+    {
+        /** @var Attribute $owner */
+        $owner = $this->owner;
+        return Yii::$app->db->tablePrefix . Model::EXTEND_DOCUMENT_PREFIX . $owner->model->name;
+    }
+
     /**
      * 增加数据模型对应的数据表字段
+     * TODO: 已经可以增加表字段，待完成根据表单增加准确字段
      */
-    protected function addField()
+    public function addField()
     {
+        /** @var Attribute $owner */
+        $owner = $this->owner;
+        $str = Yii::$app->db->queryBuilder->addColumn($this->getTableName(), $owner->name, 'string');
 
+        Yii::$app->db->createCommand($str)->execute();
     }
 
     /**
