@@ -6,14 +6,21 @@ use yii\widgets\Pjax;
 use app\models\Model;
 use app\models\Attribute;
 
+$title = function () {
+    $title = '';
+    if ($model_id = Yii::$app->request->get('model_id')) {
+        $title .= Model::findOne($model_id)->title . ' - ';
+    }
+    $title .= Yii::t('cms', 'Attributes');
+
+    return $title;
+};
+
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-if ($param = Yii::$app->request->get('AttributeSearch')) {
-    $model_id = $param['model_id'];
-    $this->title .= Model::findOne($model_id)->title . ' - ';
-}
-$this->title .= Yii::t('cms', 'Attributes');
+
+$this->title = $title();
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="attribute-index">
